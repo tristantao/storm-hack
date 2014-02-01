@@ -47,10 +47,10 @@ public class TweetTopology {
     TopologyBuilder builder = new TopologyBuilder();
 
     builder.setSpout("word", 
-           new TwitterSampleSpout("[Your customer key]",
-                 "[Your secret key]",
-                 "[Your access token]", 
-                 "[Your access secret]"), 1);
+           new TwitterSampleSpout("sjBfQvFe9kx9Vk8lWQsvg",
+                 "sDsUYWuwICKIs8LZ77jGZQ1fvqFBA6Fg0ETSQyEvZU",
+                 "1730288448-RXH8GlJFE8hdVbHv6PFsNWej4bTkRjYKK0skER2", 
+                 "8lZiD5yAOwAEVE9IDZGA8rc3LBf9cJbXkhBAmEb2rUtgL"), 1);
 
     builder.setBolt("stdout", new StdoutBolt(), 3).shuffleGrouping("word");
 
