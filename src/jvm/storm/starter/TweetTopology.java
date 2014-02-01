@@ -1,4 +1,8 @@
 package storm.starter;
+import jyinterface.factory.JythonFactory;
+import jyinterface.interfaces.ClassifierType;
+
+import org.python.util.PythonInterpreter;
 
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
@@ -15,8 +19,9 @@ import backtype.storm.tuple.Values;
 import backtype.storm.utils.Utils;
 import storm.starter.spout.TwitterSampleSpout;
 
-
 import java.util.Map;
+
+import org.python.util.PythonInterpreter;
 
 /**
  * This is a basic example of a Storm topology.
@@ -25,7 +30,8 @@ public class TweetTopology {
 
   public static class StdoutBolt extends BaseRichBolt {
     OutputCollector _collector;
-
+    ClassifierType cT;
+    
     @Override
     public void prepare(Map conf, TopologyContext context, OutputCollector collector) {
       _collector = collector;
@@ -33,7 +39,11 @@ public class TweetTopology {
 
     @Override
     public void execute(Tuple tuple) {
-      _collector.emit(tuple, new Values(tuple.getValue(0)));
+      JythonFactory jf = JythonFactory.getInstance();
+      ClassifierType classifier = (ClassifierType) jf.getJythonObject(
+                             "jyinterface.interfaces.ClassifierType", "classify.py");
+      String result = classifier.identify((String) tuple.getValue(0));
+      _collector.emit(tuple, new Values(result));
       _collector.ack(tuple);
     }
 

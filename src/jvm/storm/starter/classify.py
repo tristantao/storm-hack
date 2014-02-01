@@ -4,7 +4,8 @@ import sys
 #Original credit goes to:
 # https://gist.github.com/322906/90dea659c04570757cccf0ce1e6d26c9d06f9283
 # Adapted for command line usage
-from jyinterface.interfaces import ClassifyType
+#import ClassifierType
+from jyinterface.interfaces import ClassifierType
 
 class Classifier(ClassifyType):
 
