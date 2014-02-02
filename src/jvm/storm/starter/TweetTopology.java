@@ -42,9 +42,11 @@ public class TweetTopology {
       JythonFactory jf = JythonFactory.getInstance();
       ClassifierType classifier = (ClassifierType) jf.getJythonObject(
                              "jyinterface.interfaces.ClassifierType", "classify.py");
-      String result = classifier.identify((String) tuple.getValue(0));
+      String result = classifier.identify((String) tuple.getString(0));
       _collector.emit(tuple, new Values(result));
       _collector.ack(tuple);
+      System.out.println("===================================================\n");
+      System.out.println(result);
     }
 
     @Override
